@@ -1,0 +1,143 @@
+@import "tailwindcss";
+
+/* ===== Cyberpunk Design System ===== */
+@theme {
+  --color-cyber-bg: #0D0D0D;
+  --color-cyber-surface: #1A1A1A;
+  --color-cyber-surface-light: #252525;
+  --color-cyber-border: #333333;
+  --color-cyber-primary: #00F0FF;
+  --color-cyber-primary-dim: #00F0FF66;
+  --color-cyber-accent: #FF003C;
+  --color-cyber-accent-dim: #FF003C66;
+  --color-cyber-green: #00FF41;
+  --color-cyber-green-dim: #00FF4166;
+  --color-cyber-yellow: #FFE600;
+  --color-cyber-text: #E0E0E0;
+  --color-cyber-text-dim: #888888;
+  --font-heading: "Orbitron", sans-serif;
+  --font-mono: "Share Tech Mono", monospace;
+  --font-body: "Noto Sans TC", sans-serif;
+}
+
+/* ===== Global Styles ===== */
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--color-cyber-bg);
+  color: var(--color-cyber-text);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+}
+
+/* Grid background overlay */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image:
+    linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Scanline overlay */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.05) 0px,
+    rgba(0, 0, 0, 0.05) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  pointer-events: none;
+  z-index: 9998;
+}
+
+#root {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+}
+
+/* ===== Scrollbar ===== */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #0D0D0D; }
+::-webkit-scrollbar-thumb { background: #00F0FF44; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #00F0FF88; }
+
+/* ===== Animations ===== */
+@keyframes flicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.97; }
+  52% { opacity: 0.9; }
+  54% { opacity: 0.99; }
+}
+
+@keyframes typing-cursor {
+  0%, 100% { border-right-color: var(--color-cyber-primary); }
+  50% { border-right-color: transparent; }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 5px var(--color-cyber-primary-dim), 0 0 20px var(--color-cyber-primary-dim); }
+  50% { box-shadow: 0 0 10px var(--color-cyber-primary), 0 0 40px var(--color-cyber-primary-dim); }
+}
+
+@keyframes glow-pulse-accent {
+  0%, 100% { box-shadow: 0 0 5px var(--color-cyber-accent-dim), 0 0 20px var(--color-cyber-accent-dim); }
+  50% { box-shadow: 0 0 10px var(--color-cyber-accent), 0 0 40px var(--color-cyber-accent-dim); }
+}
+
+@keyframes glow-pulse-green {
+  0%, 100% { box-shadow: 0 0 5px var(--color-cyber-green-dim), 0 0 20px var(--color-cyber-green-dim); }
+  50% { box-shadow: 0 0 10px var(--color-cyber-green), 0 0 40px var(--color-cyber-green-dim); }
+}
+
+@keyframes text-glitch {
+  0% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(2px, -1px); }
+  60% { transform: translate(-1px, -2px); }
+  80% { transform: translate(1px, 1px); }
+  100% { transform: translate(0); }
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slide-in-right {
+  from { opacity: 0; transform: translateX(30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes progress-fill {
+  from { width: 0; }
+}
+
+@keyframes data-stream {
+  0% { background-position: 0% 0%; }
+  100% { background-position: 0% 100%; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes count-up-glow {
+  0% { text-shadow: 0 0 20px var(--color-cyber-primary); }
+  100% { text-shadow: 0 0 5px var(--color-cyber-primary-dim); }
+}
