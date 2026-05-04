@@ -139,3 +139,60 @@ body::after {
   0% { text-shadow: 0 0 20px var(--color-cyber-primary); }
   100% { text-shadow: 0 0 5px var(--color-cyber-primary-dim); }
 }
+
+/* ===== Option Button Styles ===== */
+.btn-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 20px;
+  background: rgba(13, 13, 13, 0.6);
+  border: 1px solid #333;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+}
+
+.btn-option .opt-icon {
+  font-family: var(--font-heading);
+  font-size: 14px;
+  font-weight: 700;
+  color: #888;
+  min-width: 28px;
+  transition: color 0.2s;
+}
+
+.btn-option .opt-text {
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: #aaa;
+  transition: color 0.2s;
+  line-height: 1.6;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .btn-option:hover {
+    background: rgba(0, 240, 255, 0.08);
+    border-color: var(--color-cyber-primary);
+    box-shadow: 0 0 15px rgba(0, 240, 255, 0.15);
+  }
+  .btn-option:hover .opt-icon {
+    color: var(--color-cyber-primary);
+  }
+  .btn-option:hover .opt-text {
+    color: var(--color-cyber-text);
+  }
+}
+
+.btn-option:active {
+  background: rgba(0, 240, 255, 0.12);
+  border-color: var(--color-cyber-primary);
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.2);
+}
+.btn-option:active .opt-icon {
+  color: var(--color-cyber-primary);
+}
+.btn-option:active .opt-text {
+  color: var(--color-cyber-text);
+}

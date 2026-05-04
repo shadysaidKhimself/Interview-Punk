@@ -19,7 +19,6 @@ export default function GameMode({ questions, onFinish, onBack }: GameModeProps)
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState<UserAnswer[]>([]);
-  const [hoveredOption, setHoveredOption] = useState<string | null>(null);
 
   const total = selectedQuestions.length;
   const current = selectedQuestions[currentIndex];
@@ -36,12 +35,15 @@ export default function GameMode({ questions, onFinish, onBack }: GameModeProps)
 
     const newAnswers = [...answers, userAnswer];
 
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
+
     if (currentIndex + 1 >= total) {
       onFinish(newAnswers);
     } else {
       setAnswers(newAnswers);
       setCurrentIndex(prev => prev + 1);
-      setHoveredOption(null);
     }
   };
 
@@ -195,45 +197,17 @@ export default function GameMode({ questions, onFinish, onBack }: GameModeProps)
         }}>
           {current.options.map((option, idx) => {
             const optionValue = current.type === 'TF' ? option : option.charAt(0);
-            const isHovered = hoveredOption === optionValue;
             return (
               <button
                 key={`${current.id}-opt-${idx}`}
                 id={`btn-option-${current.id}-${idx}`}
+                className="btn-option"
                 onClick={() => handleAnswer(optionValue)}
-                onMouseEnter={() => setHoveredOption(optionValue)}
-                onMouseLeave={() => setHoveredOption(null)}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '12px',
-                  padding: '14px 20px',
-                  background: isHovered ? 'rgba(0, 240, 255, 0.08)' : 'rgba(13, 13, 13, 0.6)',
-                  border: `1px solid ${isHovered ? '#00F0FF' : '#333'}`,
-                  borderRadius: '6px',
-                  cursor: 'pointer',
-                  transition: 'all 0.2s ease',
-                  textAlign: 'left',
-                  boxShadow: isHovered ? '0 0 15px rgba(0, 240, 255, 0.15)' : 'none',
-                }}
               >
-                <span style={{
-                  fontFamily: '"Orbitron", sans-serif',
-                  fontSize: '14px',
-                  fontWeight: 700,
-                  color: isHovered ? '#00F0FF' : '#888',
-                  minWidth: '28px',
-                  transition: 'color 0.2s',
-                }}>
+                <span className="opt-icon">
                   {current.type === 'TF' ? (option === 'O' ? '◯' : '✕') : option.charAt(0)}
                 </span>
-                <span style={{
-                  fontFamily: '"Noto Sans TC", sans-serif',
-                  fontSize: '15px',
-                  color: isHovered ? '#E0E0E0' : '#aaa',
-                  transition: 'color 0.2s',
-                  lineHeight: '1.6',
-                }}>
+                <span className="opt-text">
                   {current.type === 'TF'
                     ? (option === 'O' ? '是的，正確' : '不，這是錯的')
                     : option.slice(3)
