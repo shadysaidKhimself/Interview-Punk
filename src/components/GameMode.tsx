@@ -131,7 +131,7 @@ export default function GameMode({ questions, onFinish, onBack }: GameModeProps)
 
       {/* Question Card */}
       <div
-        key={currentIndex}
+        key={current.id}
         style={{
           width: '100%',
           maxWidth: '750px',
@@ -198,8 +198,8 @@ export default function GameMode({ questions, onFinish, onBack }: GameModeProps)
             const isHovered = hoveredOption === optionValue;
             return (
               <button
-                key={idx}
-                id={`btn-option-${idx}`}
+                key={`${current.id}-opt-${idx}`}
+                id={`btn-option-${current.id}-${idx}`}
                 onClick={() => handleAnswer(optionValue)}
                 onMouseEnter={() => setHoveredOption(optionValue)}
                 onMouseLeave={() => setHoveredOption(null)}
