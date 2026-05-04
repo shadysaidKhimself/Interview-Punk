@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 interface DashboardProps {
   onNavigate: (view: 'game' | 'faq' | 'checklist') => void;
 }
@@ -12,8 +10,7 @@ const modules = [
     subtitle: 'Logic Verification Zone',
     description: '隨機抽取 20 題面試情境題，測試你的職場判斷力。無即時回饋，一氣呵成完成挑戰。',
     icon: '⚡',
-    borderColor: '#00F0FF',
-    glowColor: 'rgba(0, 240, 255, 0.15)',
+    colorClass: 'module-card--cyan',
   },
   {
     id: 'faq' as const,
@@ -22,8 +19,7 @@ const modules = [
     subtitle: 'Core Database',
     description: '經典面試必問題庫與答題心法，從自我介紹到情境題，一次掌握關鍵回答策略。',
     icon: '📡',
-    borderColor: '#00FF41',
-    glowColor: 'rgba(0, 255, 65, 0.15)',
+    colorClass: 'module-card--green',
   },
   {
     id: 'checklist' as const,
@@ -32,13 +28,15 @@ const modules = [
     subtitle: 'Gear Checkpoint',
     description: '從面試前一週到出發前，具體可執行的準備清單。逐項打勾，解鎖面試完全體。',
     icon: '🔧',
-    borderColor: '#FFE600',
-    glowColor: 'rgba(255, 230, 0, 0.15)',
+    colorClass: 'module-card--yellow',
   },
 ];
 
 export default function Dashboard({ onNavigate }: DashboardProps) {
-  const [hoveredId, setHoveredId] = useState<string | null>(null);
+  const handleNavigate = (e: React.MouseEvent<HTMLButtonElement>, id: 'game' | 'faq' | 'checklist') => {
+    (e.currentTarget as HTMLElement).blur();
+    onNavigate(id);
+  };
 
   return (
     <div style={{
@@ -83,95 +81,42 @@ export default function Dashboard({ onNavigate }: DashboardProps) {
         width: '100%',
         maxWidth: '1000px',
       }}>
-        {modules.map((mod, idx) => {
-          const isHovered = hoveredId === mod.id;
-          return (
-            <button
-              key={mod.id}
-              id={`btn-module-${mod.id}`}
-              onClick={() => onNavigate(mod.id)}
-              onMouseEnter={() => setHoveredId(mod.id)}
-              onMouseLeave={() => setHoveredId(null)}
-              style={{
-                background: isHovered ? mod.glowColor : 'rgba(26, 26, 26, 0.8)',
-                border: `1px solid ${isHovered ? mod.borderColor : '#333'}`,
-                borderRadius: '8px',
-                padding: '2rem',
-                cursor: 'pointer',
-                textAlign: 'left',
-                transition: 'all 0.3s ease',
-                boxShadow: isHovered
-                  ? `0 0 25px ${mod.glowColor}, inset 0 0 25px ${mod.glowColor}`
-                  : '0 2px 10px rgba(0,0,0,0.3)',
-                animation: `slide-up 0.6s ease-out ${idx * 0.15}s both`,
-                transform: isHovered ? 'translateY(-4px)' : 'none',
-              }}
-            >
-              {/* Module Code */}
-              <div style={{
-                fontFamily: '"Share Tech Mono", monospace',
-                fontSize: '12px',
-                color: mod.borderColor,
-                marginBottom: '12px',
-                letterSpacing: '3px',
-                opacity: 0.8,
-              }}>
-                [{mod.code}]
-              </div>
+        {modules.map((mod, idx) => (
+          <button
+            key={mod.id}
+            id={`btn-module-${mod.id}`}
+            className={`module-card ${mod.colorClass}`}
+            style={{ animationDelay: `${idx * 0.15}s` }}
+            onClick={(e) => handleNavigate(e, mod.id)}
+          >
+            {/* Module Code */}
+            <div className="module-card__code">
+              [{mod.code}]
+            </div>
 
-              {/* Icon + Title */}
-              <div style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '12px',
-                marginBottom: '8px',
-              }}>
-                <span style={{ fontSize: '2rem' }}>{mod.icon}</span>
-                <div>
-                  <div style={{
-                    fontFamily: '"Orbitron", sans-serif',
-                    fontSize: '1.1rem',
-                    fontWeight: 700,
-                    color: '#E0E0E0',
-                  }}>
-                    {mod.title}
-                  </div>
-                  <div style={{
-                    fontFamily: '"Share Tech Mono", monospace',
-                    fontSize: '12px',
-                    color: '#888',
-                  }}>
-                    {mod.subtitle}
-                  </div>
-                </div>
+            {/* Icon + Title */}
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '12px',
+              marginBottom: '8px',
+            }}>
+              <span style={{ fontSize: '2rem' }}>{mod.icon}</span>
+              <div>
+                <div className="module-card__title">{mod.title}</div>
+                <div className="module-card__subtitle">{mod.subtitle}</div>
               </div>
+            </div>
 
-              {/* Description */}
-              <p style={{
-                fontFamily: '"Noto Sans TC", sans-serif',
-                fontSize: '14px',
-                color: '#aaa',
-                lineHeight: '1.7',
-                margin: '12px 0 0',
-              }}>
-                {mod.description}
-              </p>
+            {/* Description */}
+            <p className="module-card__desc">{mod.description}</p>
 
-              {/* Enter indicator */}
-              <div style={{
-                fontFamily: '"Share Tech Mono", monospace',
-                fontSize: '13px',
-                color: mod.borderColor,
-                marginTop: '16px',
-                opacity: isHovered ? 1 : 0.5,
-                transition: 'opacity 0.3s',
-                letterSpacing: '1px',
-              }}>
-                {'>'} 進入系統 {isHovered ? '█' : ''}
-              </div>
-            </button>
-          );
-        })}
+            {/* Enter indicator */}
+            <div className="module-card__enter">
+              {'>'} 進入系統
+            </div>
+          </button>
+        ))}
       </div>
     </div>
   );

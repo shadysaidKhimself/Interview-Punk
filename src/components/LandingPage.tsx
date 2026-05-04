@@ -19,7 +19,6 @@ const BOOT_LINES = [
 export default function LandingPage({ onStart }: LandingPageProps) {
   const [displayedLines, setDisplayedLines] = useState<string[]>([]);
   const [showButton, setShowButton] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
     let i = 0;
@@ -34,6 +33,11 @@ export default function LandingPage({ onStart }: LandingPageProps) {
     }, 250);
     return () => clearInterval(interval);
   }, []);
+
+  const handleStart = (e: React.MouseEvent<HTMLButtonElement>) => {
+    (e.currentTarget as HTMLElement).blur();
+    onStart();
+  };
 
   return (
     <div style={{
@@ -109,28 +113,8 @@ export default function LandingPage({ onStart }: LandingPageProps) {
       {showButton && (
         <button
           id="btn-start-simulation"
-          onClick={onStart}
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
-          style={{
-            marginTop: '3rem',
-            padding: '16px 48px',
-            fontFamily: '"Orbitron", sans-serif',
-            fontSize: '18px',
-            fontWeight: 700,
-            color: isHovered ? '#0D0D0D' : '#00F0FF',
-            background: isHovered ? '#00F0FF' : 'transparent',
-            border: '2px solid #00F0FF',
-            borderRadius: '4px',
-            cursor: 'pointer',
-            textTransform: 'uppercase',
-            letterSpacing: '4px',
-            transition: 'all 0.3s ease',
-            boxShadow: isHovered
-              ? '0 0 20px #00F0FF, 0 0 40px rgba(0, 240, 255, 0.3)'
-              : '0 0 10px rgba(0, 240, 255, 0.3)',
-            animation: 'slide-up 0.5s ease-out, glow-pulse 2s ease-in-out infinite',
-          }}
+          className="btn-start"
+          onClick={handleStart}
         >
           ▶ 開始模擬
         </button>
