@@ -390,7 +390,7 @@ export const sampleChecklist: ChecklistItem[] = [
   { phase: '面試過程', task: '有針對問題回答（不偏題）', checked: false },
   { phase: '面試過程', task: '被挑戰時不防衛', checked: false },
   { phase: '面試過程', task: '願意承認不知道', checked: false },
-  { phase: '面試過程', task: '展現「可以學」而不是「我都會」', checked: false },
+  { phase: '面試過程', task: '展現適當的專業技巧，但仍保持謙遜的態度', checked: false },
   { phase: '面試過程', task: '講「決策」而不是只講「結果」', checked: false },
   { phase: '面試過程', task: '有提到限制與取捨（Trade-off）', checked: false },
   { phase: '面試過程', task: '嘗試用數據或具體描述', checked: false },
